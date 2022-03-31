@@ -2,7 +2,12 @@
 from kubernetes import client, config, watch
 import json, os, sys
 
-config.load_kube_config()
+try:
+  config.load_incluster_config()
+except:
+  print("In cluster config failed, falling back to file", file=sys.stderr)
+  config.load_kube_config()
+
 group = os.environ.get('WATCH_GROUP', 'bookofkubernetes.com')
 version = os.environ.get('WATCH_VERSION', 'v1')
 namespace = os.environ.get('WATCH_NAMESPACE', 'default')
