@@ -19,3 +19,4 @@ w = watch.Watch()
 for event in w.stream(api.list_namespaced_custom_object,
         group=group, version=version, namespace=namespace, plural=resource):
   json.dump(event, sys.stdout, indent=2)
+  sys.stdout.flush()
